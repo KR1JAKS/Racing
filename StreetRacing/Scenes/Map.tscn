@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxkmfbeas8vs7"]
+
+[ext_resource type="PackedScene" uid="uid://cfmrohaq6qc6a" path="res://Scenes/track.tscn" id="2_r3fwj"]
+[ext_resource type="Shader" path="res://Scenes/Water.gdshader" id="8_uwo2p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ok81s"]
+
+[sub_resource type="Sky" id="Sky_nm8b8"]
+sky_material = SubResource("ProceduralSkyMaterial_ok81s")
+
+[sub_resource type="Environment" id="Environment_ehi5j"]
+background_mode = 2
+sky = SubResource("Sky_nm8b8")
+sky_custom_fov = 1.0
+ambient_light_color = Color(1, 0.713726, 0.756863, 1)
+ambient_light_sky_contribution = 0.6
+ambient_light_energy = 0.7
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.91057, 0.324777, 0.254502, 1)
+volumetric_fog_density = 0.0
+volumetric_fog_albedo = Color(0.843137, 0.247059, 0.215686, 1)
+volumetric_fog_emission = Color(0.619608, 0.886275, 0.168627, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 0.56
+volumetric_fog_anisotropy = -0.9
+volumetric_fog_length = 0.01
+volumetric_fog_ambient_inject = 2.55
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_446og"]
+render_priority = 0
+shader = ExtResource("8_uwo2p")
+shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
+shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
+shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
+shader_parameter/distortion_speed = 2.0
+shader_parameter/tile = Vector2(5, 5)
+shader_parameter/height = 2.0
+shader_parameter/wave_size = Vector2(2, 2)
+shader_parameter/wave_speed = 1.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bdi2r"]
+size = Vector2(15000, 15000)
+
+[node name="Map" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.601815, -0.399318, 0.691639, 0, 0.866025, 0.5, -0.798635, 0.300908, -0.521187, 0, 0, 0)
+light_color = Color(0.756863, 0.796078, 1, 1)
+light_energy = 0.7
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ehi5j")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0, 0, -3.47351)
+material_override = SubResource("ShaderMaterial_446og")
+mesh = SubResource("PlaneMesh_bdi2r")
+
+[node name="map" parent="." instance=ExtResource("2_r3fwj")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.5, 0)

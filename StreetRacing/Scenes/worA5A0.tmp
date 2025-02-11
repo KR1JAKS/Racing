@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b28ned33b3c14"]
+
+[ext_resource type="Texture2D" uid="uid://dm3sw1clvnej6" path="res://textures/earth.jpg" id="1_pu3po"]
+[ext_resource type="PackedScene" uid="uid://dteeone3teygl" path="res://Scenes/player.tscn" id="2_wjgyc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81h18"]
+albedo_texture = ExtResource("1_pu3po")
+uv1_triplanar = true
+
+[node name="World" type="Node3D"]
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Map"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Map"]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Map/CSGCombiner3D"]
+material_override = SubResource("StandardMaterial3D_81h18")
+size = Vector3(100, 0.5, 100)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Map/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50.8176, 66.1229)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Map/CSGCombiner3D/CSGCombiner3D"]
+material_override = SubResource("StandardMaterial3D_81h18")
+size = Vector3(100, 0.5, 100)
+
+[node name="player" parent="." instance=ExtResource("2_wjgyc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32636, 1.46649, 16.1049)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bugaubvwdgjxl"
+path="res://.godot/imported/Fort Knox Five-Insight (ASkillz Remix).mp3-377495a420b86995ecef1fd941ce0fd6.mp3str"
+
+[deps]
+
+source_file="res://sounds/Fort Knox Five-Insight (ASkillz Remix).mp3"
+dest_files=["res://.godot/imported/Fort Knox Five-Insight (ASkillz Remix).mp3-377495a420b86995ecef1fd941ce0fd6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

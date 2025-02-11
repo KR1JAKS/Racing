@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://j3epytrv2c7b"]
+
+[ext_resource type="Script" path="res://Scenes/Day_Night.gd" id="1_87nxv"]
+[ext_resource type="Texture2D" uid="uid://dm3sw1clvnej6" path="res://textures/earth.jpg" id="1_e1pdj"]
+[ext_resource type="PackedScene" uid="uid://dteeone3teygl" path="res://Scenes/player.tscn" id="2_0a8bf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4ydo"]
+albedo_texture = ExtResource("1_e1pdj")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3wvrf"]
+albedo_texture = ExtResource("1_e1pdj")
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ok81s"]
+
+[sub_resource type="Sky" id="Sky_nm8b8"]
+sky_material = SubResource("ProceduralSkyMaterial_ok81s")
+
+[sub_resource type="Environment" id="Environment_ehi5j"]
+background_mode = 2
+sky = SubResource("Sky_nm8b8")
+sky_custom_fov = 1.0
+ambient_light_color = Color(1, 0.713726, 0.756863, 1)
+ambient_light_sky_contribution = 0.6
+ambient_light_energy = 0.7
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.91057, 0.324777, 0.254502, 1)
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_albedo = Color(0.843137, 0.247059, 0.215686, 1)
+volumetric_fog_emission = Color(0.619608, 0.886275, 0.168627, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 0.56
+volumetric_fog_anisotropy = -0.9
+volumetric_fog_length = 0.01
+volumetric_fog_ambient_inject = 2.55
+
+[node name="Map" type="Node3D"]
+script = ExtResource("1_87nxv")
+
+[node name="player" parent="." instance=ExtResource("2_0a8bf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 64, 102)
+
+[node name="Islands" type="Node3D" parent="."]
+
+[node name="Island_1" type="CSGBox3D" parent="Islands"]
+material_override = SubResource("StandardMaterial3D_g4ydo")
+use_collision = true
+size = Vector3(500, 0.5, 500)
+
+[node name="Island_2" type="CSGBox3D" parent="Islands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 216.246, 0, 478.622)
+material_override = SubResource("StandardMaterial3D_3wvrf")
+use_collision = true
+size = Vector3(495, 0.5, 285)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.601815, -0.399318, 0.691639, 0, 0.866025, 0.5, -0.798635, 0.300908, -0.521187, 0, 0, 0)
+light_color = Color(0.756863, 0.796078, 1, 1)
+light_energy = 0.7
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ehi5j")
