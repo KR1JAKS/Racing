@@ -44,7 +44,7 @@
 
 <img src="https://skillicons.dev/icons?i=godot" />
 
-##### Годот 4.3
+###### Годот 4.3
 
 # 🎮 Геймплей игры
 <div align="center">
