@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6aexhypb2djq"
+uid="uid://dkscxrse1p0bg"
 path.s3tc="res://.godot/imported/track_BarkPoplar001_Cylinder.png-4779b14d26d11872581a9ef4604eb139.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "b278b3ab0bd26ed4ab9d9bfd2536e4fb"
 }
 
 [deps]

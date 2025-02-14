@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmwvdkdm3ly2i"
+uid="uid://dy2qec4osul8c"
 path.s3tc="res://.godot/imported/track_road.jpg-75dd7d157b110f4c24bbe096f831776e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "8b2f5f2f460430d8c83f658979d0b64d"
 }
 
 [deps]

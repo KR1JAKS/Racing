@@ -1,11 +1,60 @@
-[gd_scene load_steps=3 format=3 uid="uid://b28ned33b3c14"]
+[gd_scene load_steps=9 format=3 uid="uid://b28ned33b3c14"]
 
+[ext_resource type="PackedScene" uid="uid://bdrp41b1spng6" path="res://Scenes/pause_menu.tscn" id="2_405m8"]
 [ext_resource type="PackedScene" uid="uid://cxkmfbeas8vs7" path="res://Scenes/Map.tscn" id="2_drf8p"]
-[ext_resource type="PackedScene" uid="uid://dteeone3teygl" path="res://Scenes/player.tscn" id="2_wjgyc"]
+[ext_resource type="Script" path="res://scripts/manager.gd" id="3_brnn8"]
+[ext_resource type="PackedScene" uid="uid://dteeone3teygl" path="res://Scenes/player.tscn" id="4_r2icu"]
+[ext_resource type="Shader" path="res://textures/Water.gdshader" id="5_0hbf5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhts8"]
+render_priority = 0
+shader = ExtResource("5_0hbf5")
+shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
+shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
+shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
+shader_parameter/distortion_speed = 2.0
+shader_parameter/tile = Vector2(5, 5)
+shader_parameter/height = 2.0
+shader_parameter/wave_size = Vector2(2, 2)
+shader_parameter/wave_speed = 1.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_punmb"]
+size = Vector2(15000, 15000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2fkuu"]
+size = Vector3(8000, 0.5, 8000)
 
 [node name="World" type="Node3D"]
 
-[node name="player" parent="." instance=ExtResource("2_wjgyc")]
-transform = Transform3D(-0.34202, 0, 0.939692, 0, 1, 0, -0.939692, 0, -0.34202, 67, 1.5, -26.743)
-
 [node name="Map" parent="." instance=ExtResource("2_drf8p")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_405m8")]
+process_mode = 2
+
+[node name="Manager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("3_brnn8")
+
+[node name="player" parent="." instance=ExtResource("4_r2icu")]
+transform = Transform3D(-0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, -0.34202, 67, 1.5, -26.743)
+respawn_point = Vector3(67, 1.5, -26.743)
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0, 0, -3.47351)
+material_override = SubResource("ShaderMaterial_jhts8")
+mesh = SubResource("PlaneMesh_punmb")
+
+[node name="WaterArea" type="Area3D" parent="Water" groups=["water"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water/WaterArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 553.187, 0, 820.355)
+shape = SubResource("BoxShape3D_2fkuu")
+
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Resume" to="Manager" method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Quit" to="Manager" method="_on_quit_pressed"]
+[connection signal="body_entered" from="Water/WaterArea" to="player" method="_on_water_area_body_entered"]
+
+[editable path="CanvasLayer/PauseMenu"]

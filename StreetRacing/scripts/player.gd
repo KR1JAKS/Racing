@@ -1,54 +1,45 @@
 extends VehicleBody3D
 
-# Engine Sounds
 @onready var drift_sound: AudioStreamPlayer = $DriftSound
 @onready var driving_sound: AudioStreamPlayer = $DrivingSound
 @onready var idle_sound: AudioStreamPlayer = $IdleSound
 @onready var nos_sound: AudioStreamPlayer = $NOSSound
 var was_boosting: bool = false
 
-# Engine Variables
 var engine_on: bool = false
 @onready var engine_status_ui: CanvasLayer = $EngineStatusUI
 @onready var engine_status_label: Label = $EngineStatusUI/Label
 @onready var engine_start_sound: AudioStreamPlayer = $EngineStartSound
 
-# Headlights
 var headlights_on: bool = false
 @onready var front_left_light: SpotLight3D = $body/FrontLeftLight
 @onready var front_right_light: SpotLight3D = $body/FrontRightLight
 @onready var rear_left_light: OmniLight3D = $body/RearLeftLight
 @onready var rear_right_light: OmniLight3D = $body/RearRightLight
 
-# Colors
 const DEFAULT_COLOR = Color("#cfffff")
 const YELLOW_COLOR = Color.YELLOW
 const RED_COLOR = Color("#8b0000")
 const GRAY_COLOR = Color("#7c7c7c")
 
-# Surface Materials
 @onready var body_mesh: MeshInstance3D = $body
 var surface2_material: StandardMaterial3D
 var surface3_material: StandardMaterial3D
 var surface4_material: StandardMaterial3D
 
-# Movement Constants
 const MAX_STEER = 0.8
 const ENGINE_POWER = 400
 const DRIFT_STRENGTH = 5000
 const DRIFT_DECELERATION = 20000
 const DRIFT_MIN_SPEED = 0.01
 
-# Camera Constants
 const CAMERA_LERP_SPEED = 20.0
 const CAMERA_TRANSFORM_LERP_SPEED = 5.0
 
-# UI Constants
 const MUSIC_PATH = "res://sounds/"
 const MAX_ROLL_ANGLE = 60
 const TIMER_UI_DELAY = 5.0
 
-# Scene Nodes
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera_3d: Camera3D = $CameraPivot/Camera3D
 @onready var reverse_camera: Camera3D = $CameraPivot/ReverseCamera
@@ -67,18 +58,15 @@ const TIMER_UI_DELAY = 5.0
 @onready var speedometer_ui: CanvasLayer = $SpeedometerUI
 @onready var speed_label: RichTextLabel = $SpeedometerUI/SpeedLabel
 
-# New Cameras
 @onready var x1_camera: Camera3D = $X1
 @onready var x2_camera: Camera3D = $X2
 @onready var x3_camera: Camera3D = $X3
 
-# Camera Logic
 var cameras: Array[Camera3D]
 var current_camera_index: int = 0
 var camera_timer: Timer
 var camera_cycle_active: bool = false
 
-# Stamina Timers
 var stamina_timer: Timer
 var max_stamina: float = 100.0
 var current_stamina: float = max_stamina
@@ -87,22 +75,20 @@ var stamina_regen_rate: float = 25.0
 var is_boosting: bool = false
 var is_recharging: bool = false
 
-# Flip Logic
 var is_flipped: bool = false
 var look_at: Vector3
 
-# Music Variables
 var music_files: Array[String] = []
 var current_track_index: int = 0
 var track_display_time = 2.0
 var track_display_timer: float = 0.0
 
-# Drift Variables
 var is_drifting = false
 var drift_direction = 0
 
-# Smoothed Speed Value
 var displayed_speed: float = 0.0
+
+@export var respawn_point: Vector3
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -168,6 +154,9 @@ func _ready():
 	driving_sound.stream.loop = true
 	idle_sound.stream.loop = true
 	nos_sound.stream.loop = false
+
+	if respawn_point == Vector3.ZERO:
+		respawn_point = global_transform.origin
 
 func _physics_process(delta):
 	var move_input = Input.get_axis("ui_down", "ui_up")
@@ -474,6 +463,16 @@ func _update_rear_lights_and_surface2(is_reversing: bool, is_drifting: bool):
 	surface2_material.albedo_color = RED_COLOR if is_red else GRAY_COLOR
 	rear_left_light.visible = is_red
 	rear_right_light.visible = is_red
-	var light_color = Color("FF0000") if is_red else Color("FFFFFF")  # Added a default color
+	var light_color = Color("FF0000") if is_red else Color("FFFFFF")
 	rear_left_light.light_color = light_color
 	rear_right_light.light_color = light_color
+
+func _on_water_area_body_entered(body):
+	if body == self:
+		reset_to_respawn_point()
+
+func reset_to_respawn_point():
+	global_transform.origin = respawn_point
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO
+	rotation = Vector3.ZERO

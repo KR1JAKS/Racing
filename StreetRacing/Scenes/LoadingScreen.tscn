@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://jrwt68ntjb0h"]
+
+[ext_resource type="Script" path="res://scripts/LoadingScreen.gd" id="1_bsvet"]
+[ext_resource type="FontFile" uid="uid://bmjbakqrwlamn" path="res://fonts/NFS.ttf" id="2_l7hpr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krrmk"]
+bg_color = Color(0.6, 1, 0.6, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bsvet")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="ProgressBar" type="ProgressBar" parent="ColorRect/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_l7hpr")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/fill = SubResource("StyleBoxFlat_krrmk")
+show_percentage = false

@@ -636,7 +636,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_qwtjr")
 show_percentage = false
 
 [node name="BlurEffect" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_7u0hw")
 anchors_preset = 15
 anchor_right = 1.0

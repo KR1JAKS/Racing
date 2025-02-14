@@ -1,0 +1,128 @@
+[gd_scene load_steps=8 format=3 uid="uid://di2u68pkmfafe"]
+
+[ext_resource type="Script" path="res://scripts/settings_menu.gd" id="1_mairt"]
+[ext_resource type="FontFile" uid="uid://bmjbakqrwlamn" path="res://fonts/NFS.ttf" id="2_h4ffn"]
+[ext_resource type="AudioStream" uid="uid://6hjk0os35rew" path="res://Embient/eng.mp3" id="3_iq4ht"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7o3i0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8c5es"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.352941, 0.352941, 0.352941, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj82y"]
+bg_color = Color(0.247059, 0.247059, 0.247059, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.352941, 0.352941, 0.352941, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0jsr"]
+bg_color = Color(0.247059, 0.247059, 0.247059, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.352941, 0.352941, 0.352941, 1)
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mairt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_h4ffn")
+theme_override_font_sizes/font_size = 64
+text = "Настройки"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="ColorRect/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_h4ffn")
+theme_override_font_sizes/font_size = 32
+text = "Размер экрана   "
+horizontal_alignment = 3
+
+[node name="ResolutionOption" type="OptionButton" parent="ColorRect/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_h4ffn")
+
+[node name="MarginContainer2" type="MarginContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 30
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Label2" type="Label" parent="ColorRect/VBoxContainer/MarginContainer2/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("2_h4ffn")
+text = "Полноэкранный режим  "
+horizontal_alignment = 3
+
+[node name="FullscreenCheck" type="CheckBox" parent="ColorRect/VBoxContainer/MarginContainer2/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/focus = SubResource("StyleBoxFlat_7o3i0")
+
+[node name="BackButton" type="Button" parent="ColorRect/VBoxContainer"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_h4ffn")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxFlat_8c5es")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mj82y")
+theme_override_styles/normal = SubResource("StyleBoxFlat_j0jsr")
+text = "Назад"
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_iq4ht")
+
+[connection signal="item_selected" from="ColorRect/VBoxContainer/MarginContainer/HBoxContainer/ResolutionOption" to="." method="_on_resolution_option_item_selected"]
+[connection signal="toggled" from="ColorRect/VBoxContainer/MarginContainer2/HBoxContainer2/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
