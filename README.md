@@ -42,6 +42,8 @@
 <br>
 
 # 🎮 Геймплей игры
+
 <div align="center">
 <img src="https://i.imgur.com/kf4C64K.gif" alt="Описание GIF" />
 </div>
+
