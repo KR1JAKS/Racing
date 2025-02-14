@@ -42,9 +42,7 @@
 
 # ⚒️ Технология, которую я использовал
 
-<img src="https://skillicons.dev/icons?i=godot" />
-
-###### Годот 4.3
+<img src="https://skillicons.dev/icons?i=godot" /> - Godot 4.3
 
 # 🎮 Геймплей игры
 <div align="center">
