@@ -17,23 +17,24 @@ func start_async_load():
 
 func _load_scene():
 	ResourceLoader.load_threaded_request(loading_scene)
-	
+
 	while true:
 		var status = ResourceLoader.load_threaded_get_status(loading_scene, progress)
-		
+
 		match status:
 			ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 				call_deferred("_update_progress", progress[0] * 90)
 				await get_tree().process_frame
-			
+
 			ResourceLoader.THREAD_LOAD_LOADED:
 				var scene = ResourceLoader.load_threaded_get(loading_scene)
 				call_deferred("_finalize_loading", scene)
 				break
-			
+
 			ResourceLoader.THREAD_LOAD_FAILED:
 				print("Ошибка загрузки сцены")
 				break
+	call_deferred("_thread_finished")
 
 func _update_progress(value: float):
 	var tween = create_tween()
@@ -52,3 +53,6 @@ func _finalize_loading(scene: PackedScene):
 
 	instance.show()
 	queue_free()
+
+func _thread_finished():
+	load_thread.wait_to_finish()

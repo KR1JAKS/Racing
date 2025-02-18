@@ -27,6 +27,8 @@ func _on_quit_pressed() -> void:
 	pause_menu.queue_free()
 	var player = get_node("../player")
 	var map = get_node("../Map")
+	var minimap = get_node("../CanvasLayer2")
+	minimap.queue_free()
 	map.queue_free()
 	player.queue_free()
 	queue_free()
